@@ -7,7 +7,7 @@ export function buildDirections(route) {
       .flatMap((trip) =>
         trip.schedule.map((row) => {
           const raw = row[columnIndex];
-          return { raw, minutes: toMinutesSinceMidnight(raw), tripLabel: trip.label };
+          return { raw, minutes: toMinutesSinceMidnight(raw) };
         })
       )
       .sort((a, b) => a.minutes - b.minutes);

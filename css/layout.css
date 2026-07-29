@@ -39,6 +39,14 @@
   text-align: center;
 }
 
+.page-footer p {
+  margin: 0 0 var(--space-1);
+}
+
+.page-footer p:last-child {
+  margin-bottom: 0;
+}
+
 .routes-grid {
   display: grid;
   gap: var(--space-4);

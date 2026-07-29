@@ -13,6 +13,20 @@ export function formatClock(minutesSinceMidnight) {
   return `${hour12}:${String(minute).padStart(2, "0")} ${suffix}`;
 }
 
+export function formatRelativeTime(minutesSinceMidnight, nowMinutes) {
+  const diff = minutesSinceMidnight - nowMinutes;
+  if (diff === 0) return "Departing now";
+
+  const distance = Math.abs(diff);
+  const hours = Math.floor(distance / 60);
+  const minutes = distance % 60;
+  const parts = [];
+  if (hours) parts.push(`${hours}h`);
+  parts.push(`${minutes}m`);
+
+  return diff > 0 ? `In ${parts.join(" ")}` : `${parts.join(" ")} ago`;
+}
+
 export function getISTNowMinutes() {
   const parts = new Intl.DateTimeFormat("en-GB", {
     timeZone: "Asia/Kolkata",

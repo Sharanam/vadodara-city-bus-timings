@@ -1,5 +1,10 @@
 import { initTheme } from "./theme.js";
-import { getShowPreviousBuses } from "./storage.js";
+import {
+  getShowPreviousBuses,
+  getShowOnlyFavourites,
+  getFavouriteRouteIds,
+  setFavouriteRouteIds,
+} from "./storage.js";
 import { renderRoutes } from "./render.js";
 import { initControls } from "./controls.js";
 
@@ -16,7 +21,11 @@ async function main() {
   initTheme();
 
   const container = document.getElementById("routes");
-  const prefs = { showPreviousBuses: getShowPreviousBuses() };
+  const prefs = {
+    showPreviousBuses: getShowPreviousBuses(),
+    showOnlyFavourites: getShowOnlyFavourites(),
+    favouriteRouteIds: getFavouriteRouteIds(),
+  };
 
   let routes;
   try {
@@ -27,12 +36,24 @@ async function main() {
     return;
   }
 
-  const rerender = () => renderRoutes(container, routes, prefs);
+  const rerender = () =>
+    renderRoutes(container, routes, prefs, {
+      onToggleFavourite: (routeId) => {
+        if (prefs.favouriteRouteIds.has(routeId)) prefs.favouriteRouteIds.delete(routeId);
+        else prefs.favouriteRouteIds.add(routeId);
+        setFavouriteRouteIds(prefs.favouriteRouteIds);
+        rerender();
+      },
+    });
   rerender();
 
   initControls({
     onShowPreviousBusesChange: (value) => {
       prefs.showPreviousBuses = value;
+      rerender();
+    },
+    onShowOnlyFavouritesChange: (value) => {
+      prefs.showOnlyFavourites = value;
       rerender();
     },
   });
