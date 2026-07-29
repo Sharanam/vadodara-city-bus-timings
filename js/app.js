@@ -10,11 +10,10 @@ import { initControls } from "./controls.js";
 
 const REFRESH_INTERVAL_MS = 60_000;
 
-async function loadRoutes() {
+async function loadData() {
   const response = await fetch("data/routes.json");
   if (!response.ok) throw new Error(`Failed to load route data: ${response.status}`);
-  const data = await response.json();
-  return data.routes;
+  return response.json();
 }
 
 async function main() {
@@ -27,14 +26,17 @@ async function main() {
     favouriteRouteIds: getFavouriteRouteIds(),
   };
 
-  let routes;
+  let routes, meta;
   try {
-    routes = await loadRoutes();
+    ({ routes, meta } = await loadData());
   } catch (error) {
     container.textContent = "Could not load bus schedule data. Please try again later.";
     console.error(error);
     return;
   }
+
+  const lastUpdated = document.getElementById("last-updated");
+  if (meta.lastUpdated) lastUpdated.textContent = `Schedule data last updated: ${meta.lastUpdated}`;
 
   const rerender = () =>
     renderRoutes(container, routes, prefs, {
