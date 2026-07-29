@@ -1,0 +1,75 @@
+.route-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-3);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.route-card__heading {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.route-card__number {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.route-card__note {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+
+.direction {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.direction__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.time-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.time-chip {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-2);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.time-chip--upcoming {
+  border-color: var(--color-upcoming);
+  color: var(--color-upcoming);
+}
+
+.time-chip--current {
+  background: var(--color-current);
+  border-color: var(--color-current);
+  color: var(--color-accent-contrast);
+  font-weight: 600;
+}
+
+.time-chip--past {
+  color: var(--color-past);
+  text-decoration: line-through;
+}
+
+.direction__empty {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
